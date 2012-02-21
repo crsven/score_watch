@@ -20,7 +20,7 @@ while game_on = TRUE do
   end
 
   time = html.css("##{game.to_s}clock").first.content
-  if time.gsub(" ","").gsub("-","").gsub("'","") == "90"
+  if time.gsub(" ","").gsub("-","").gsub("'","") == "FT"
     game_on = FALSE
   end
   sleep 30
