@@ -10,18 +10,23 @@ url+=game
 old_score = "0-0"
 while game_on = TRUE do
   html = Nokogiri::HTML(open(url))
+  time = html.css("##{game.to_s}clock").first.content
+  time = time.gsub(" ","").gsub("-","").gsub("'","")
+  if time == "FT"
+    game_on = FALSE
+    puts "All over!"
+    growl_input = "-n 'Gamecast' -m 'Game over!'"
+    system("growlnotify #{growl_input}")
+  end
+
   scoreline = html.css(".matchup-score").first.content
   scoreline.gsub("?","")
   if scoreline != old_score
-    puts scoreline
-    growl_input = "-n 'Gamecast' -m 'Score was #{old_score}, but is now #{scoreline}'"
+    puts "#{time}: #{scoreline}"
+    growl_input = "-n 'Gamecast' -m '#{time}: Score was #{old_score}, but is now #{scoreline}'"
     system("growlnotify #{growl_input}")
     old_score = scoreline
   end
 
-  time = html.css("##{game.to_s}clock").first.content
-  if time.gsub(" ","").gsub("-","").gsub("'","") == "FT"
-    game_on = FALSE
-  end
   sleep 30
 end
