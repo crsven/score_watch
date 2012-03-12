@@ -34,7 +34,11 @@ while game_on = TRUE do
     growl_input = "-n 'Gamecast' -m '#{time}: Score was #{old_score}, but is now #{scoreline}'"
     system("growlnotify #{growl_input}")
     old_score = scoreline
-    goal_text = html.css(".select-comment b").first.content
+    goal_comment = html.css(".select-comment").first
+    goal_text = ""
+    goal_comment.css("b").each do |text|
+      goal_text+=text.content
+    end
     puts "#{goal_text}\n\n"
     growl_input = "-n 'Gamecast' -m '#{goal_text}'"
     system("growlnotify #{growl_input}")
