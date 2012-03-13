@@ -12,10 +12,35 @@ old_score = "0-0"
 html = Nokogiri::HTML(open(url))
 home_team = html.css(".team.home h3").first.content
 away_team = html.css(".team.away h3").first.content
-while game_on = TRUE do
+
+# If not started, wait to announce start
+started = FALSE
+waiting = FALSE
+while started == FALSE do
+  clock = html.css("##{game.to_s}clock").first
+  if waiting == TRUE
+    sleep 30
+  elsif clock['style'].include?("display:none")
+    puts "Waiting for match to start..."
+    waiting = TRUE
+    sleep 30
+  else
+    start_message = "Match has started: #{home_team} v #{away_team}"
+    puts start_message
+    growl_input = "-n 'Gamecast' -m '#{start_message}'"
+    system("growlnotify #{growl_input}")
+    started = TRUE
+  end
+end
+
+while game_on == TRUE do
+  # Open gamecast page
   html = Nokogiri::HTML(open(url))
+
+  # Check status of match
   timeStatus = html.css("##{game.to_s}statusTabText").first.content
   timeStatus.strip!
+  # If Full Time, end watcher
   if timeStatus == "Full-time"
     game_on = FALSE
     puts "All over!"
