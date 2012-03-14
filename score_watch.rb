@@ -7,7 +7,7 @@ url = "http://soccernet.espn.go.com/gamecast?id="
 game = ARGV[0]
 url+=game
 
-old_score = "0-0"
+old_score = "0 - 0"
 
 html = Nokogiri::HTML(open(url))
 home_team = html.css(".team.home h3").first.content
@@ -18,11 +18,11 @@ started = FALSE
 waiting = FALSE
 while started == FALSE do
   clock = html.css("##{game.to_s}clock").first
-  if waiting == TRUE
-    sleep 30
-  elsif clock['style'].include?("display:none")
+  if clock['style'].include?("display:none") && waiting == FALSE
     puts "Waiting for match to start..."
     waiting = TRUE
+    sleep 30
+  elsif clock['style'].include?("display:none") && waiting == TRUE
     sleep 30
   else
     start_message = "Match has started: #{home_team} v #{away_team}"
@@ -30,6 +30,8 @@ while started == FALSE do
     growl_input = "-n 'Gamecast' -m '#{start_message}'"
     system("growlnotify #{growl_input}")
     started = TRUE
+    waiting = FALSE
+    game_on = TRUE
   end
 end
 
@@ -49,7 +51,7 @@ while game_on == TRUE do
     exit
   end
 
-  time = html.css("##{game.to_s}clock").first.content
+  time = clock.content
   time = time.gsub(" ","").gsub("-","").gsub("'","")
 
   scoreline = html.css(".matchup-score").first.content
