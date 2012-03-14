@@ -8,4 +8,5 @@ Takes an ESPN Gamecast match ID and scrapes the Gamecast page repeatedly to gath
 * Allow for command line only
 * Scrape a lower-density page for info, such as the day's list of games
 * Allow for multiple games to be watched
+* Add case for extra time
 * Gem it up
