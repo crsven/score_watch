@@ -51,7 +51,7 @@ while game_on == TRUE do
     exit
   end
 
-  time = clock.content
+  time = html.css("##{game.to_s}clock").first
   time = time.gsub(" ","").gsub("-","").gsub("'","")
 
   scoreline = html.css(".matchup-score").first.content
