@@ -67,7 +67,7 @@ while game_on == TRUE do
       goal_comment.css("b").each do |text|
         goal_text+=text.content
       end
-      puts "#{goal_text}\n\n"
+      puts "#{goal_text}\n"
       growl_input = "-n 'Gamecast' -m '#{goal_text}'"
       system("growlnotify #{growl_input}")
     end
