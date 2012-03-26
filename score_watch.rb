@@ -57,8 +57,8 @@ while game_on == TRUE do
   scoreline = html.css(".matchup-score").first.content
   scoreline.gsub("?","")
   if scoreline != old_score
-    puts "#{time}: #{home_team} #{scoreline} #{away_team}"
-    growl_input = "-n 'Gamecast' -m '#{home_team} v. #{away_team} #{time}:\nScore was #{old_score}, but is now #{scoreline}'"
+    puts "#{time}': #{home_team} #{scoreline} #{away_team}"
+    growl_input = "-n 'Gamecast' -m '#{home_team} v. #{away_team} #{time}':\nScore was #{old_score}, but is now #{scoreline}'"
     system("growlnotify #{growl_input}")
     old_score = scoreline
     goal_comment = html.css(".select-comment").first
