@@ -1,0 +1,5 @@
+#!/usr/bin/ruby
+
+require File.dirname(__FILE__) + '/../lib/ScoreWatch'
+
+ScoreWatch::Match.new ARGV[0]

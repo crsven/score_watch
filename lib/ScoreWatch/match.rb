@@ -1,6 +1,3 @@
-require 'open-uri'
-require 'nokogiri'
-
 # Init
 # - get_teams
 # - get_status
@@ -11,7 +8,7 @@ require 'nokogiri'
 # IF OVER
 #   - get_score, end
 #
-class Match
+class ScoreWatch::Match
   GROWL_OPTIONS = "-n 'Score Watch'"
   def initialize(id)
     @match_id = id
@@ -42,7 +39,7 @@ class Match
   private
 
   def refresh
-    @html = Nokogiri::HTML(open(url))
+    @html = Nokogiri::HTML(open(@match_url))
   end
 
   def get_teams
