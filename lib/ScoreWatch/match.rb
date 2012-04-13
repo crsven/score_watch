@@ -21,6 +21,7 @@ class ScoreWatch::Match
     @game_on = FALSE
     @status = nil
     get_teams
+    watch
   end
 
   def watch
@@ -28,7 +29,9 @@ class ScoreWatch::Match
     refresh
     @status = get_status
     if @status == "waiting"
+      growl("Waiting for match to start.")
     elsif @status == "playing"
+      growl("Playing.")
     elsif @status == "match_over"
       growl("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
     end
@@ -50,7 +53,7 @@ class ScoreWatch::Match
 
   def current_score
     refresh
-    scoreline = html.css(".matchup-score").first.content
+    scoreline = @html.css(".matchup-score").first.content
     scoreline.gsub("?","")
     return scoreline
   end
@@ -71,7 +74,7 @@ class ScoreWatch::Match
 
   def is_started?
     refresh
-    clock = html.css("##{game.to_s}clock").first
+    clock = @html.css("##{@match_id.to_s}clock").first
     if clock['style'].include?("display:none")
       return false
     else
@@ -81,12 +84,12 @@ class ScoreWatch::Match
 
   def is_over?
     refresh
-    timeStatus = html.css("##{game.to_s}statusTabText").first.content
+    timeStatus = @html.css("##{@match_id.to_s}statusTabText").first.content
     timeStatus.strip!
     if timeStatus == "Full-time"
-      return TRUE
+      return true
     else
-      return FALSE
+      return false
     end
   end
 
