@@ -29,11 +29,11 @@ class ScoreWatch::Match
     refresh
     @status = get_status
     if @status == "waiting"
-      growl("Waiting for match to start.")
+      message("Waiting for match to start.")
     elsif @status == "playing"
-      growl("Playing.")
+      message("#{@current_time}: #{@home_team} #{current_score} #{@away_team}")
     elsif @status == "match_over"
-      growl("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
+      message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
     end
     # output status
     # wait
@@ -101,5 +101,10 @@ class ScoreWatch::Match
   def growl(text)
     growl_input = "#{GROWL_OPTIONS} -m '#{text}'"
     system("growlnotify #{growl_input}")
+  end
+
+  def message(text)
+    growl(text)
+    puts(text)
   end
 end
