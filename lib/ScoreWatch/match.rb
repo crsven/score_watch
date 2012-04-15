@@ -84,13 +84,14 @@ class ScoreWatch::Match
   end
 
   def get_current_time
-    timeStatus = @html.css("##{@match_id.to_s}statusTabText").first.content
-    timeStatus.strip!
+    clock = @html.css("##{@match_id.to_s}clock").first.content
+    time = clock.gsub(" ","").gsub("-","").gsub("'","")
   end
 
   def is_over?
     refresh
-    timeStatus = current_time
+    timeStatus = @html.css("##{@match_id.to_s}statusTabText").first.content
+    timeStatus.strip!
     if timeStatus == "Full-time"
       return true
     else
