@@ -28,7 +28,13 @@ class ScoreWatch::Match
 
   def watch
     refresh
+    get_score
     get_status
+    if @old_score != @current_score
+      comment = get_goal_comment
+      message("#{@home_team} #{@current_score} #{@away_team}")
+      message(comment)
+    end
     wait
     watch
   end
@@ -46,11 +52,21 @@ class ScoreWatch::Match
     @away_team = @html.css(".team.away h3").first.content
   end
 
-  def current_score
+  def get_score
     refresh
+    @old_score = @current_score
     scoreline = @html.css(".matchup-score").first.content
     scoreline.gsub("?","")
-    return scoreline
+    @current_score = scoreline
+  end
+
+  def get_goal_comment
+    refresh
+    goal_text = @html.css(".select-comment").first
+    goal_comment = ""
+    if goal_text
+      goal_comment = goal_text.css(".comment").first.content
+    end
   end
 
   def get_status
@@ -61,7 +77,7 @@ class ScoreWatch::Match
       end
       return
     elsif is_started?
-      message("Match has started:\n#{@current_time}: #{@home_team} #{current_score} #{@away_team}")
+      message("Match has started:\n#{@current_time}: #{@home_team} v. #{@away_team}")
       @game_on = true
     elsif is_over?
       message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
