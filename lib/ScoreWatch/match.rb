@@ -18,8 +18,6 @@ class ScoreWatch::Match
     @current_time = nil
     @old_score = "0 - 0"
     @current_score = nil
-    @started = false
-    #combine?
     @game_on = false
     @status = nil
     get_teams
@@ -31,9 +29,11 @@ class ScoreWatch::Match
     get_score
     get_status
     if @old_score != @current_score
-      comment = get_goal_comment
       message("#{@home_team} #{@current_score} #{@away_team}")
-      message(comment)
+      comment = get_goal_comment
+      if comment
+        message(comment)
+      end
     end
     wait
     watch
@@ -53,7 +53,6 @@ class ScoreWatch::Match
   end
 
   def get_score
-    refresh
     @old_score = @current_score
     scoreline = @html.css(".matchup-score").first.content
     scoreline.gsub("?","")
@@ -66,6 +65,10 @@ class ScoreWatch::Match
     goal_comment = ""
     if goal_text
       goal_comment = goal_text.css(".comment").first.content
+    end
+
+    if goal_comment.trim! == ""
+      return nil
     end
   end
 
