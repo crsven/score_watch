@@ -1,13 +1,3 @@
-# Init
-# - get_teams
-# - get_status
-# IF WAIT
-#   - wait, get_status
-# IF GAME ON
-#   - get_score, wait
-# IF OVER
-#   - get_score, end
-#
 class ScoreWatch::Match
   GROWL_OPTIONS = "-n 'Score Watch'"
   PING_TIME = 30
