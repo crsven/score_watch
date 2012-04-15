@@ -43,6 +43,7 @@ class ScoreWatch::Match
 
   def refresh
     @html = Nokogiri::HTML(open(@match_url))
+    @current_time = get_current_time
   end
 
   def get_teams
@@ -82,10 +83,14 @@ class ScoreWatch::Match
     end
   end
 
-  def is_over?
-    refresh
+  def get_current_time
     timeStatus = @html.css("##{@match_id.to_s}statusTabText").first.content
     timeStatus.strip!
+  end
+
+  def is_over?
+    refresh
+    timeStatus = current_time
     if timeStatus == "Full-time"
       return true
     else
