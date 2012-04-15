@@ -72,16 +72,14 @@ class ScoreWatch::Match
   def get_status
     if @game_on == true
       if is_over?
-        message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
-        exit
+        end_match
       end
       return
     elsif is_started?
       message("Match has started:\n#{@current_time}: #{@home_team} v. #{@away_team}")
       @game_on = true
     elsif is_over?
-      message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
-      exit
+      end_match
     else
       message("Waiting for match to start.")
     end
@@ -115,6 +113,11 @@ class ScoreWatch::Match
     else
       return false
     end
+  end
+
+  def end_match
+    message("Match ended! Final score: #{@home_team} #{@current_score} #{@away_team}")
+    exit
   end
 
   def growl(text)
