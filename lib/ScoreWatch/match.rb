@@ -10,33 +10,27 @@
 #
 class ScoreWatch::Match
   GROWL_OPTIONS = "-n 'Score Watch'"
+  PING_TIME = 30
+
   def initialize(id)
     @match_id = id
     @match_url = "http://soccernet.espn.go.com/gamecast?id=#{@match_id}"
     @current_time = nil
     @old_score = "0 - 0"
     @current_score = nil
-    @started = FALSE
+    @started = false
     #combine?
-    @game_on = FALSE
+    @game_on = false
     @status = nil
     get_teams
     watch
   end
 
   def watch
-    # get_status
     refresh
-    @status = get_status
-    if @status == "waiting"
-      message("Waiting for match to start.")
-    elsif @status == "playing"
-      message("#{@current_time}: #{@home_team} #{current_score} #{@away_team}")
-    elsif @status == "match_over"
-      message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
-    end
-    # output status
-    # wait
+    get_status
+    wait
+    watch
   end
 
   private
@@ -60,17 +54,25 @@ class ScoreWatch::Match
   end
 
   def get_status
-    if is_started?
-      return "playing"
+    if @game_on == true
+      if is_over?
+        message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
+        exit
+      end
+      return
+    elsif is_started?
+      message("Match has started:\n#{@current_time}: #{@home_team} #{current_score} #{@away_team}")
+      @game_on = true
     elsif is_over?
-      return "match_over"
+      message("Match ended! Final score: #{@home_team} #{current_score} #{@away_team}")
+      exit
     else
-      return "waiting"
+      message("Waiting for match to start.")
     end
   end
 
   def wait
-    sleep 30
+    sleep PING_TIME
   end
 
   def is_started?
