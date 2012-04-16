@@ -57,7 +57,7 @@ class ScoreWatch::Match
       goal_comment = goal_text.css(".comment").first.content
     end
 
-    if goal_comment.trim! == ""
+    if goal_comment.strip! == ""
       return nil
     end
   end
@@ -69,7 +69,7 @@ class ScoreWatch::Match
       end
       return
     elsif is_started?
-      message("Match has started:\n#{@current_time}: #{@home_team} v. #{@away_team}")
+      message("Match has started!")
       @game_on = true
     elsif is_over?
       end_match
