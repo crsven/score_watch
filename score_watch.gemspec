@@ -9,6 +9,6 @@ Gem::Specification.new do |s|
   s.email        = 'crsven@gmail.com'
   s.executables  = ["score_watch"]
   s.files        = Dir["{lib}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
-  s.homepage     = 'http://www.crsvenningsen.com/projects'
+  s.homepage     = 'https://github.com/crsven/score_watch'
   s.require_path = 'lib'
 end
