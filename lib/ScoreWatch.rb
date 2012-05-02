@@ -4,7 +4,7 @@ require 'open-uri'
 require 'nokogiri'
 
 module ScoreWatch
-  VERSION = "0.2.3"
+  VERSION = "0.2.4"
 end
 
 require 'ScoreWatch/match'
