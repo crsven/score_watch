@@ -11,6 +11,7 @@ class ScoreWatch::Match
     @game_on = false
     @status = nil
     get_teams
+    message("#{@home_team} v. #{@away_team}")
     watch
   end
 
@@ -18,7 +19,7 @@ class ScoreWatch::Match
     refresh
     get_score
     get_status
-    if @old_score != @current_score
+    if @game_on == true && @old_score != @current_score
       message("#{@home_team} #{@current_score} #{@away_team}")
       comment = get_goal_comment
       if comment
@@ -73,7 +74,8 @@ class ScoreWatch::Match
       @game_on = true
     elsif is_over?
       end_match
-    else
+    elsif @status != :watching
+      @status = :watching
       message("Waiting for match to start.")
     end
   end
