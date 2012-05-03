@@ -70,10 +70,17 @@ class ScoreWatch::Match
     if @game_on == true
       if is_over?
         end_match
+      elsif is_half? && @status != :half_time
+        @status = :half_time
+      elsif !is_half? && @status == :half_time
+        @status = :watching
       end
       return
     elsif is_started?
       message("Match has started!")
+      @game_on = true
+    elsif is_half?
+      message("Half-time")
       @game_on = true
     elsif is_over?
       end_match
@@ -100,6 +107,17 @@ class ScoreWatch::Match
   def get_current_time
     clock = @html.css("##{@match_id.to_s}clock").first.content
     time = clock.gsub(" ","").gsub("-","").gsub("'","")
+  end
+
+  def is_half?
+    refresh
+    timeStatus = @html.css("##{@match_id.to_s}statusTabText").first.content
+    timeStatus.strip!
+    if timeStatus == "Half-time"
+      return true
+    else
+      return false
+    end
   end
 
   def is_over?
