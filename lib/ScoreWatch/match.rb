@@ -20,7 +20,7 @@ class ScoreWatch::Match
     get_score
     get_status
     if @game_on == true && @old_score != @current_score
-      message("#{@home_team} #{@current_score} #{@away_team}")
+      message("(#{@current_time}) #{@home_team} #{@current_score} #{@away_team}")
       comment = get_goal_comment
       if comment
         message(comment)
