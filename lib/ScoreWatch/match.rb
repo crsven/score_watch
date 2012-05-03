@@ -55,11 +55,13 @@ class ScoreWatch::Match
     goal_text = @html.css(".select-comment").first
     goal_comment = ""
     if goal_text
-      goal_comment = goal_text.css(".comment").first.content
-    end
-
-    if goal_comment.strip! == ""
-      return nil
+      goal_comment = goal_text.css(".comment").first
+      if goal_comment
+        goal_comment = goal_comment.content
+        if goal_comment.strip! == ""
+          return nil
+        end
+      end
     end
   end
 
