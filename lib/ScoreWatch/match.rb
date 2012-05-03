@@ -51,6 +51,7 @@ class ScoreWatch::Match
   end
 
   def get_goal_comment
+    sleep 5
     refresh
     goal_text = @html.css(".select-comment").first
     goal_comment = ""
