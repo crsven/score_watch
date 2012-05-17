@@ -6,7 +6,7 @@ Takes an ESPN Gamecast match ID and scrapes the Gamecast page repeatedly to gath
 ### Installation
 ```
 $ (sudo) gem install ScoreWatch
-$ score_watch <GameCast ID>
+$ score-watch <GameCast ID>
 ```
 
 ### TODO
