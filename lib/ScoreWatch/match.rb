@@ -1,11 +1,11 @@
 class Match
-  GROWL_OPTIONS = "-n 'Score Watch'"
   PING_TIME = 30
+  ESPN_URL = "http://soccernet.espn.go.com/gamecast?id="
 
   def initialize(id)
     @opts = TrollopUI.parse
     @match_id = id
-    @match_url = "http://soccernet.espn.go.com/gamecast?id=#{@match_id}"
+    @match_url = "#{ESPN_URL}#{@match_id}"
     @current_time = nil
     @old_score = "0 - 0"
     @current_score = nil
@@ -18,10 +18,7 @@ class Match
 
   def start_match
     @status = :starting
-    # get score history
     print_history
-    # output history
-    # set current score
     watch
   end
 
