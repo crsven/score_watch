@@ -5,3 +5,4 @@ module ScoreWatch
 end
 
 require 'ScoreWatch/match'
+require 'ScoreWatch/growl'

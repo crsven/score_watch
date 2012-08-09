@@ -1,4 +1,4 @@
-class ScoreWatch::Match
+class Match
   GROWL_OPTIONS = "-n 'Score Watch'"
   PING_TIME = 30
 
