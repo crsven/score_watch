@@ -12,6 +12,15 @@ class ScoreWatch::Match
     @status = nil
     get_teams
     message("#{@home_team} v. #{@away_team}")
+    start_match
+  end
+
+  def start_match
+    @status = :starting
+    # get score history
+    print_history
+    # output history
+    # set current score
     watch
   end
 
@@ -144,5 +153,28 @@ class ScoreWatch::Match
   def message(text)
     growl(text)
     puts(text)
+  end
+
+  def get_history
+    refresh
+    goals = @html.css(".soccer-icons-goal")
+    goal_history = []
+    goals.each_with_index do |goal, i|
+      goal_attrs = Hash[goal.to_a]
+      goal_time = goal_attrs['onmouseover'].match(/<\/strong> - (\d+)/)[1]
+      goal_scorer = goal.parent.parent.css('.player-name').text
+      goal_history << {:time => goal_time, :scorer => goal_scorer}
+    end
+    goal_history
+  end
+
+  def print_history
+    history = get_history
+    list = "Goal List:\n"
+    history.each do |goal|
+      list << "(#{goal[:time]}) - #{goal[:scorer]}\n"
+    end
+    list << "--------"
+    message(list)
   end
 end
