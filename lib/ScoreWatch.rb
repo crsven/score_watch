@@ -1,8 +1,6 @@
 require 'open-uri'
 require 'nokogiri'
-
-module ScoreWatch
-end
+require 'trollop'
 
 require 'ScoreWatch/match'
 require 'ScoreWatch/growl'

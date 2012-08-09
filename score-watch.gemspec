@@ -9,5 +9,6 @@ Gem::Specification.new do |s|
   s.files          = Dir["{lib}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
   s.homepage       = 'https://github.com/crsven/score_watch'
   s.add_dependency 'nokogiri', '>=1.5.0'
+  s.add_dependency 'trollop'
   s.requirements << 'Growlnotify: http://growl.info/downloads'
 end

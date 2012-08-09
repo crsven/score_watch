@@ -3,6 +3,10 @@ class Match
   PING_TIME = 30
 
   def initialize(id)
+    @opts = Trollop::options do
+      opt :growl, "Use Growlnotify for notifications"
+      opt :cli, "Output on command line", :default => true
+    end
     @match_id = id
     @match_url = "http://soccernet.espn.go.com/gamecast?id=#{@match_id}"
     @current_time = nil
@@ -145,14 +149,14 @@ class Match
     exit
   end
 
-  def growl(text)
-    growl_input = "#{GROWL_OPTIONS} -m '#{text}'"
-    system("growlnotify #{growl_input}")
-  end
-
   def message(text)
-    growl(text)
-    puts(text)
+    if @opts[:growl]
+      Growl.message(text)
+    end
+
+    if @opts[:cli]
+      puts(text)
+    end
   end
 
   def get_history
