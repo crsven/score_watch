@@ -6,8 +6,13 @@ Takes an ESPN Gamecast match ID and scrapes the Gamecast page repeatedly to gath
 ### Installation
 ```
 $ (sudo) gem install ScoreWatch
-$ score-watch <GameCast ID>
+$ score-watch <GameCast ID> [options]
 ```
+
+### Options
+Output options:
+`--growl` - toggles Growlnotify output
+`--cli` - toggles command line output (default: true)
 
 ### TODO
 * Stop using Growlnotify in favor of a Ruby growl library
