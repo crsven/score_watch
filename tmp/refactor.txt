@@ -1,0 +1,10 @@
+Match
+  - watches for updates
+  - has a Score
+
+Score
+  - instance has current score
+  - has a number of Goals
+
+Goal
+  - has a scorer and time

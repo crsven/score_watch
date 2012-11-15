@@ -1,0 +1,4 @@
+#! /usr/bin/zsh
+gem uninstall ScoreWatch
+gem build score-watch.gemspec
+gem install ScoreWatch-0.3.gem

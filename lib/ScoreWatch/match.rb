@@ -44,7 +44,7 @@ class Match
     @current_time = get_current_time
   end
 
-  def get_teams
+  def self.get_teams
     refresh
     @home_team = @html.css(".team.home h3").first.content
     @away_team = @html.css(".team.away h3").first.content

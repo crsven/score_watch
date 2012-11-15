@@ -10,5 +10,6 @@ Gem::Specification.new do |s|
   s.homepage       = 'https://github.com/crsven/score_watch'
   s.add_dependency 'nokogiri', '>=1.5.0'
   s.add_dependency 'trollop'
+  s.add_development_dependency 'rake'
   s.requirements << 'Growlnotify: http://growl.info/downloads'
 end
